@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--root tag for android manifest-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<!--declares that my app requires device it runs on to have bluetooth hardware-->
+    <uses-feature android:name="android.hardware.bluetooth"/>
+<!--basic bluetooth access-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+<!--allows discovering and pairing with devices-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<!--for bluetooth LE advertising probs no need unless app advertises itself-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+<!--required on android 12+ to connect to or communicate w bluetooth devices-->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<!--allow access to phone state(signal info/ IMEI etc)-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<!--allows system level bluetooth access-->
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<!--declares the application itself
+allow users to backup data
+launcher icon on home screen
+name of app
+icon for devices w circular icon
+enables right to left layout mirroring
+applies style to whole app-->
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/pikachu_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/pikachu_icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MDP_Grp_14">
+
+<!--declares your main screen MainActivity-->
+        <activity
+            android:name="com.example.mdp_group_43.MainActivity"
+            android:exported="true">
+<!--intent-filter tells android this is the entry point of the app-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+<!--another activity, used for configuring/connecting bluetooth-->
+        <activity android:name="com.example.mdp_group_43.BluetoothSetUp"/>
+    </application>
+
+</manifest>
