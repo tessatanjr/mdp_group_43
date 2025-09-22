@@ -34,6 +34,7 @@ import org.json.JSONArray;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class Home extends Fragment {
@@ -363,10 +364,11 @@ public class Home extends Fragment {
             }
             //ROBOT|5,4,EAST (Early version of updating robot position via comms)
             if(message.contains("ROBOT")) {
-                String[] cmd = message.split("\\|");
-                String[] sentCoords = cmd[1].split(",");
-                String[] sentDirection = sentCoords[2].split("\\.");
-//                BluetoothCommunications.getMessageReceivedTextView().append("\n");
+                String[] cmd = message.split(",");
+                String[] sentCoords = Arrays.copyOfRange(cmd,2,5);
+                Log.d(TAG, "Sent coords " + Arrays.toString(sentCoords));
+                String[] sentDirection = Arrays.copyOfRange(sentCoords,2,3);
+                Log.d(TAG, "Sent direction " + Arrays.toString(sentDirection));
                 String direction = "";
                 String abc = String.join("", sentDirection);
                 if (abc.contains("EAST")) {
@@ -384,7 +386,12 @@ public class Home extends Fragment {
                 else{
                     direction = "";
                 }
-                gridMap.setCurCoord(Integer.valueOf(sentCoords[1]) + 2, 19 - Integer.valueOf(sentCoords[0]), direction);
+                Log.d(TAG, direction);
+                BluetoothCommunications.getMessageReceivedTextView().append("x: " + cmd[1]+ " y: " + cmd[2] + " ROBOT DIRECTION: " + cmd[3] +"\n");
+//                gridMap.setCurCoord(Integer.valueOf(sentCoords[0]), Integer.valueOf(sentCoords[1]), direction);
+//                if message containts UPDATE, call setCurCoord
+                gridMap.setCurCoord(Integer.valueOf(sentCoords[0]), Integer.valueOf(sentCoords[1]), direction);
+//                gridMap.setCurCoord(Integer.valueOf(sentCoords[1]) + 2, 19 - Integer.valueOf(sentCoords[0]), direction);
             }
             //image format from RPI is "TARGET~<obID>~<ImValue>" eg TARGET~3~7
             else if(message.contains("TARGET")) {
@@ -402,7 +409,7 @@ public class Home extends Fragment {
 //                    }
 
                     gridMap.updateIDFromRpi(String.valueOf(Integer.valueOf(cmd[1])-1), cmd[2]);
-                    obstacleID = String.valueOf(Integer.valueOf(cmd[1]) - 2);
+//                    obstacleID = String.valueOf(Integer.valueOf(cmd[1]) - 2);
 
 
 //                    int ob= Integer.parseInt(obstacleID);

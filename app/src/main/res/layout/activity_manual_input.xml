@@ -14,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Manual obstacle input"
-        android:textColor="@color/black"
+        android:textColor="@color/colorWhite"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="X: "
-        android:textColor="@color/black"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +40,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintStart_toEndOf="@+id/xTextView"
         app:layout_constraintTop_toBottomOf="@+id/manualFragmentTitleTextView" />
 
@@ -51,7 +52,7 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="Y: "
-        android:textColor="@color/black"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/xDropdownSpinner"
@@ -62,6 +63,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintStart_toEndOf="@+id/yTextView"
         app:layout_constraintTop_toBottomOf="@+id/manualFragmentTitleTextView" />
 
@@ -73,7 +75,7 @@
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="Direction: "
-        android:textColor="@color/black"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,6 +88,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="110dp"
         android:minWidth="100dp"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toEndOf="@+id/directionTextView"
@@ -104,8 +107,8 @@
         app:layout_constraintStart_toEndOf="@+id/cancelManualBtn"
         app:layout_constraintTop_toBottomOf="@+id/directionDropdownSpinner"
         app:layout_constraintVertical_bias="0.049"
-        android:background="@drawable/border_black_state"
-        app:backgroundTint="@color/colorYellow"/>
+        android:background="@drawable/selected_tab2"
+        app:backgroundTint="@null"/>
 
 
     <Button
@@ -122,8 +125,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/directionTextView"
         app:layout_constraintVertical_bias="0.05"
-        android:background="@drawable/border_black_state"
-        app:backgroundTint="@color/colorYellow"
+        android:background="@drawable/selected_tab2"
+        app:backgroundTint="@null"
         />
 
     <Switch
@@ -132,6 +135,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:text="Obstacle"
+        android:textColor="@color/colorWhite"
+        android:thumbTint="@color/lightGray"
+        android:trackTint="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="@+id/directionDropdownSpinner"
         app:layout_constraintStart_toEndOf="@+id/directionDropdownSpinner"
         app:layout_constraintTop_toTopOf="@+id/directionDropdownSpinner" />

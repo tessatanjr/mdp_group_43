@@ -92,7 +92,7 @@ public class BluetoothCommunications extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             String text = intent.getStringExtra("receivedMessage");
-            messageReceivedTextView.append(text+"\n");
+//            messageReceivedTextView.append(text+"\n");
         }
     };
 }

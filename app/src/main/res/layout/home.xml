@@ -50,7 +50,7 @@
                     android:gravity="center"
                     android:text="BLUETOOTH"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
                 <!--        app:drawableLeftCompat="@mipmap/left"
         app:drawableRightCompat="@mipmap/right"-->
@@ -92,7 +92,7 @@
                     android:gravity="center"
                     android:text="ROBOT STATUS"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
                 <!--
             app:drawableLeftCompat="@mipmap/left"
@@ -120,7 +120,7 @@
                     android:gravity="center"
                     android:text="DIRECTION"
                     android:textAlignment="center"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/colorWhite" />
                 <!--
             app:drawableLeftCompat="@mipmap/left"
             app:drawableRightCompat="@mipmap/right"-->
@@ -147,7 +147,7 @@
                     android:gravity="center"
                     android:text="COORDINATES"
                     android:textAlignment="center"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/colorWhite" />
                 <!--        android:drawableLeft="@mipmap/left"
             android:drawableRight="@mipmap/right"-->
 
@@ -276,7 +276,7 @@
                             android:layout_height="50dp"
                             android:layout_marginStart="10dp"
                             android:background="@color/transparent"
-                            android:foreground="@drawable/poke_left" />
+                            android:foreground="@drawable/a" />
 
                         <!--                        android:background="@drawable/circular_button"-->
                         <ImageButton
@@ -285,7 +285,7 @@
                             android:layout_height="50dp"
                             android:layout_marginStart="15dp"
                             android:background="@color/transparent"
-                            android:foreground="@drawable/poke_up" />
+                            android:foreground="@drawable/w" />
 
                         <ImageButton
                             android:id="@+id/rightBtn"
@@ -293,7 +293,7 @@
                             android:layout_height="50dp"
                             android:layout_marginStart="15dp"
                             android:background="@color/transparent"
-                            android:foreground="@drawable/poke_right" />
+                            android:foreground="@drawable/s" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -317,7 +317,7 @@
                             android:layout_height="50dp"
                             android:layout_marginStart="15dp"
                             android:background="@color/transparent"
-                            android:foreground="@drawable/poke_down" />
+                            android:foreground="@drawable/d" />
 
                         <ImageButton
                             android:id="@+id/brightBtn"

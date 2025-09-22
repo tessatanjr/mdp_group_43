@@ -140,7 +140,6 @@ public class MappingFragment extends Fragment {
                 showToast("Reseting map...");
                 Home.printMessage("CLEAR");
                 gridMap.resetMap();
-
             }
         });
 
@@ -182,7 +181,7 @@ public class MappingFragment extends Fragment {
                 else {  // 1st tap on the toggle btn
                     showToast("Please select starting point");
                     gridMap.setStartCoordStatus(true);
-                    gridMap.toggleCheckedBtn("setStartPointToggleBtn");
+//                    gridMap.toggleCheckedBtn("setStartPointToggleBtn");
                     setStartPointToggleBtn.setBackgroundResource(R.drawable.border_black_pressed);
                 }
             }

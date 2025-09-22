@@ -79,8 +79,8 @@
                 app:tabMinWidth="130dp"
                 app:tabMode="scrollable"
                 app:tabRippleColor="@null"
-
-                app:tabSelectedTextColor="@color/colorBlack" />
+                app:tabTextColor="@color/colorWhite"
+                app:tabSelectedTextColor="@color/colorWhite" />
 
         </androidx.viewpager.widget.ViewPager>
 
