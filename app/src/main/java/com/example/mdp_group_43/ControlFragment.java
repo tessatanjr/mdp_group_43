@@ -27,6 +27,7 @@ public class ControlFragment extends Fragment {
     SharedPreferences sharedPreferences;
 
     // Control Button
+    ImageButton startImageBtn;
     ImageButton moveForwardImageBtn, turnRightImageBtn, moveBackImageBtn, turnLeftImageBtn,turnbleftImageBtn,turnbrightImageBtn;
     ImageButton exploreResetButton, fastestResetButton;
     private static long exploreTimer, fastestTimer;
@@ -88,6 +89,7 @@ public class ControlFragment extends Fragment {
                 Context.MODE_PRIVATE);
 
         // variable initialization
+        startImageBtn = Home.getStartBtn();
         moveForwardImageBtn = Home.getUpBtn();
         turnRightImageBtn = Home.getRightBtn();
         moveBackImageBtn = Home.getDownBtn();
@@ -108,6 +110,31 @@ public class ControlFragment extends Fragment {
         gridMap = Home.getGridMap();
 
         // Button Listener
+        startImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLog("Clicked StartImageBtn");
+                Home.printMessage("START"); // send a string to RPI via Bluetooth
+                robotStatusTextView.setText("Started");
+                showToast("Sent START to robot");
+
+                moveForwardImageBtn.setEnabled(false);
+                turnRightImageBtn.setEnabled(false);
+                moveBackImageBtn.setEnabled(false);
+                turnLeftImageBtn.setEnabled(false);
+                turnbleftImageBtn.setEnabled(false);
+                turnbrightImageBtn.setEnabled(false);
+
+//                MappingFragment mappingFragment = (MappingFragment) getActivity()
+//                        .getSupportFragmentManager()
+//                        .findFragmentByTag("MAPPING_FRAGMENT_TAG");  // <-- use the correct tag
+//
+//                if (mappingFragment != null) {
+//                    mappingFragment.setButtonsEnabled(false);
+//                }
+            }
+        });
+
         moveForwardImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

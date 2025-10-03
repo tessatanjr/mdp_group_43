@@ -362,6 +362,17 @@ public class MappingFragment extends Fragment {
         return root;
     }
 
+    public void setButtonsEnabled(boolean enabled) {
+        resetMapBtn.setEnabled(enabled);
+        setStartPointToggleBtn.setEnabled(enabled);
+        directionChangeImageBtn.setEnabled(enabled);
+        obstacleImageBtn.setEnabled(enabled);
+        saveMapObstacle.setEnabled(enabled);
+        loadMapObstacle.setEnabled(enabled);
+        dragSwitch.setEnabled(enabled);
+        changeObstacleSwitch.setEnabled(enabled);
+    }
+
     private void showLog(String message) {
         Log.d(TAG, message);
     }

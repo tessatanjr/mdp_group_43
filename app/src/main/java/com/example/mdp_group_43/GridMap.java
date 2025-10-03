@@ -346,10 +346,10 @@ public class GridMap extends View {
         showLog("curCoord[0] = " + curCoord[0] + ", curCoord[1] = " + curCoord[1]);
         int androidRowCoord = curCoord[1];
 
-        if ((androidRowCoord - 1) < 0 || androidRowCoord > 19) {
+        if ((androidRowCoord - 2) < 0 || androidRowCoord > 19) {
             showLog("row is out of bounds");
             return;
-        } else if (curCoord[0] > 20 || curCoord[0] < 2) {
+        } else if (curCoord[0] > 19 || curCoord[0] < 2) {
             showLog("col is out of bounds");
             return;
         } else {
@@ -374,51 +374,35 @@ public class GridMap extends View {
             showLog("CELLS GRID:\n" + gridDump.toString());
             // draws the 2x2 squares in colour robotColor
             // horizontal lines
-            for (int y = androidRowCoord - 3; y <= androidRowCoord; y++) {
-                canvas.drawLine(
-                        cells[curCoord[0] - 1][21 - y - 2].startX,
-                        cells[curCoord[0]][21 - y - 2].startY,
-                        cells[curCoord[0] + 1][21 - y - 2].endX,
-                        cells[curCoord[0]][21 - y - 2].startY,
-                        robotColor
-                );
-            }
-            // vertical lines
-            for (int x = curCoord[0] - 2; x <= curCoord[0] + 1; x++) {
-                canvas.drawLine(
-                        cells[x][21 - androidRowCoord - 1].endX,
-                        cells[x][21 - androidRowCoord].endY,
-                        cells[x][21 - androidRowCoord - 1].endX,
-                        cells[x][21 - androidRowCoord - 2].startY,
-                        robotColor
-                );
+            try {
+                for (int y = androidRowCoord - 3; y <= androidRowCoord; y++) {
+                    canvas.drawLine(
+                            cells[curCoord[0] - 1][21 - y - 2].startX,
+                            cells[curCoord[0]][21 - y - 2].startY,
+                            cells[curCoord[0] + 1][21 - y - 2].endX,
+                            cells[curCoord[0]][21 - y - 2].startY,
+                            robotColor
+                    );
+                }
+                // vertical lines
+                for (int x = curCoord[0] - 2; x <= curCoord[0] + 1; x++) {
+                    canvas.drawLine(
+                            cells[x][21 - androidRowCoord - 1].endX,
+                            cells[x][21 - androidRowCoord].endY,
+                            cells[x][21 - androidRowCoord - 1].endX,
+                            cells[x][21 - androidRowCoord - 2].startY,
+                            robotColor
+                    );
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+                return;
             }
 
             Log.d(TAG, this.getRobotDirection());
             // use cells[initialCol][20 - initialRow] as ref
             switch (this.getRobotDirection()) {
                 case "up":
-//                    showLog("THISSSSSS curCoord = (" + curCoord[0] + "," + curCoord[1] + ")");
-//                    showLog("THISSSSSS mapped to cells[" + (curCoord[0]-1) + "][" + (20-androidRowCoord) + "]");
-//                    showLog("THISSSSSS drawing at x=" + cells[curCoord[0]-1][20-androidRowCoord].startX
-//                            + ", y=" + cells[curCoord[0]][20-androidRowCoord-1].startY);
-//
-//                    StringBuilder gridDump = new StringBuilder();
-//
-//                    for (int row = 0; row < cells.length; row++) {
-//                        for (int col = 0; col < cells[row].length; col++) {
-//                            gridDump.append("(")
-//                                    .append(cells[row][col].startX)
-//                                    .append(",")
-//                                    .append(cells[row][col].startY)
-//                                    .append(")\t"); // tab for spacing
-//                        }
-//                        gridDump.append("\n"); // new line per row
-//                    }
-//
-//                    // Print entire grid at once
-//                    showLog("CELLS GRID:\n" + gridDump.toString());
-
                     //This makes the coordinates adjustable instead of static
                     op.inMutable = true;
                     //change icon pic
@@ -533,10 +517,10 @@ public class GridMap extends View {
 
         dir = (direction.equals("up")) ? "NORTH" : (direction.equals("down")) ? "SOUTH" : (direction.equals("left")) ? "WEST" : "EAST";
 
-        if ((col - 2) >= 0 && (row - 1) >= 0) {
+        if ((col - 2) >= 0 && (row - 2) >= 0) {
 //            Home.printMessage("real-world robot coordinates..." + "ROBOT" + "," + (col - 2) * 5 + "," + (row - 1) * 5 + "," + dir.toUpperCase());
             // this sends to rpi bottom left
-            Home.printMessage("real-world robot coordinates..." + "ROBOT" + "," + (row - 1) * 10 + "," + (col - 2) * 10 + "," + dir.toUpperCase());
+            Home.printMessage("ROBOT" + "," + (row - 1) + "," + (col - 1) + "," + dir.toUpperCase() + " ");
 
             //send to RPI the real world coordinate
         } else {
@@ -559,15 +543,16 @@ public class GridMap extends View {
     // note that curCoord refers to the coordinate of the BOTTOM RIGHT cell of the robot
     public void setCurCoord(int col, int row, String direction) {
         showLog("Entering setCurCoord");
+        showLog("Col " + col + " Row " + row + " Direction " + direction);
 //        BluetoothCommunications.getMessageReceivedTextView().append(Integer.toString(col));
 //        BluetoothCommunications.getMessageReceivedTextView().append(Integer.toString(row));
         // although rows are from 0 to 19, if the row value given is 0 or > 19, the robot will have to be in an invalid position
-        if (row < 1 || row > 19) {
+        if (row < 2 || row > 19) {
             showLog("y is out of bounds");
             return;
         }
         // although cols are from 1 to 20, if the col value given is 1 or > 20, the robot will have to be in an invalid position
-        if (col < 2 || col > 20) {
+        if (col < 2 || col > 19) {
             showLog("x is out of bounds");
             return;
         }
@@ -666,7 +651,7 @@ public class GridMap extends View {
                 .findViewById(R.id.directionAxisTextView);
 
         xAxisTextView.setText(String.valueOf(col - 1));
-        yAxisTextView.setText(String.valueOf(row));
+        yAxisTextView.setText(String.valueOf(row - 1));
         directionAxisTextView.setText(direction);
         //updateStatus((col-1)+","+(row-1)+","+direction);
     }
@@ -687,7 +672,7 @@ public class GridMap extends View {
 
         if (((col - 1)) >= 0 && row >= 0) {
 
-            Home.printMessage("OBSTACLE" + "," + obstacleNumber + "," + (col - 1) * 10 + "," + (19 - row) * 10 + "," + (imageBearings.get(19 - row)[col - 1]).toUpperCase() + "\n");
+            Home.printMessage("OBSTACLE" + "," + obstacleNumber + "," + (col - 1) + "," + (19 - row) + "," + (imageBearings.get(19 - row)[col - 1]).toUpperCase() + "\n");
 //            BluetoothCommunications.getMessageReceivedTextView().append(Integer.toString((col - 1))+"\n");
 //            BluetoothCommunications.getMessageReceivedTextView().append(Integer.toString((19 - row))+"\n");
 //            BluetoothCommunications.getMessageReceivedTextView().append((imageBearings.get(19 - row)[col - 1]).toUpperCase()+"\n");
@@ -1069,6 +1054,11 @@ public class GridMap extends View {
 
             // change robot size and make sure its within the grid
             if (startCoordStatus) {
+                if (row < 2 || row > 19 || column > 19 || column < 2) {
+                    showToast("Fat finger press wrong!!!");
+                    return true;
+                }
+                //if column and row is oob it should return
                 if (canDrawRobot) {
                     //this doesnt properly change all the explored to unexplored OR candrawRobot is not being properly toggled
                     // removes green grids when user changes robot startpoint
@@ -1120,7 +1110,7 @@ public class GridMap extends View {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                updateRobotAxis(column, row, direction);
+//                updateRobotAxis(column, row-1, direction);
                 if (setStartPointToggleBtn.isChecked()) {
                     setStartPointToggleBtn.toggle();
                     setStartPointToggleBtn.setBackgroundResource(R.drawable.border_black);
@@ -2251,6 +2241,10 @@ public class GridMap extends View {
         Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP,0, 0);
         toast.show();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 }
