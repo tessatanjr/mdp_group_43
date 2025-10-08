@@ -520,7 +520,7 @@ public class GridMap extends View {
         if ((col - 2) >= 0 && (row - 2) >= 0) {
 //            Home.printMessage("real-world robot coordinates..." + "ROBOT" + "," + (col - 2) * 5 + "," + (row - 1) * 5 + "," + dir.toUpperCase());
             // this sends to rpi bottom left
-            Home.printMessage("ROBOT" + "," + (row - 1) + "," + (col - 1) + "," + dir.toUpperCase() + " ");
+            Home.printMessage("ROBOT" + "," + (row - 1) + "," + (col - 1) + "," + dir.toUpperCase() + "\n");
 
             //send to RPI the real world coordinate
         } else {
@@ -548,47 +548,52 @@ public class GridMap extends View {
 //        BluetoothCommunications.getMessageReceivedTextView().append(Integer.toString(row));
         // although rows are from 0 to 19, if the row value given is 0 or > 19, the robot will have to be in an invalid position
         if (row < 2 || row > 19) {
+            BluetoothCommunications.getMessageReceivedTextView().append("ERROR in GridMap/setCurCoord(), y is out of bounds: " + "\n");
             showLog("y is out of bounds");
             return;
         }
         // although cols are from 1 to 20, if the col value given is 1 or > 20, the robot will have to be in an invalid position
         if (col < 2 || col > 19) {
+            BluetoothCommunications.getMessageReceivedTextView().append("ERROR in GridMap/setCurCoord(), x is out of bounds: " + "\n");
             showLog("x is out of bounds");
             return;
         }
-        // ADD THE if candrawRobot condition should change robot to unexplored
 
-        curCoord[0] = col;
-        curCoord[1] = row;
-        this.setRobotDirection(direction);
-        this.updateRobotAxis(col, row, direction);
+        try {
+            curCoord[0] = col;
+            curCoord[1] = row;
+            this.setRobotDirection(direction);
+            this.updateRobotAxis(col, row, direction);
 
-        if (canDrawRobot) {
-            for (int i = 0; i < 21; i++) {
-                for (int j = 0; j < 21; j++) {
-                    if (cells[i][j].type.equals("robot")) {
-                        cells[i][j].setType("unexplored");
+            if (canDrawRobot) {
+                for (int i = 0; i < 21; i++) {
+                    for (int j = 0; j < 21; j++) {
+                        if (cells[i][j].type.equals("robot")) {
+                            cells[i][j].setType("unexplored");
+                        }
                     }
+                }
+
+                int[] startCoord = this.getStartCoord();
+
+                if (startCoord[0] >= 2 && startCoord[1] >= 2) {
+                    showLog("prev startCoord of robot = " + startCoord[0] + " " + startCoord[1]);
+                    for (int x = startCoord[0] - 1; x <= startCoord[0]; x++)
+                        for (int y = startCoord[1] - 1; y <= startCoord[1]; y++)
+                            cells[x][y].setType("unexplored");
                 }
             }
 
-            int[] startCoord = this.getStartCoord();
+            row = this.convertRow(row);
+            // SET ROBOT TO 3x3 HERE!!!!
+            for (int x = col - 1; x <= col + 1; x++)
+                for (int y = row - 1; y <= row + 1; y++)
+                    cells[x][y].setType("robot");
 
-            if (startCoord[0] >= 2 && startCoord[1] >= 2) {
-                showLog("prev startCoord of robot = " + startCoord[0] + " " + startCoord[1]);
-                for (int x = startCoord[0] - 1; x <= startCoord[0]; x++)
-                    for (int y = startCoord[1] - 1; y <= startCoord[1]; y++)
-                        cells[x][y].setType("unexplored");
-            }
+            showLog("Exiting setCurCoord");
+        } catch (Exception e){
+            BluetoothCommunications.getMessageReceivedTextView().append("ERROR in GridMap/setCurCoord(), robot setting is throwing error: " + e + "\n");
         }
-
-        row = this.convertRow(row);
-        // SET ROBOT TO 3x3 HERE!!!!
-        for (int x = col - 1; x <= col + 1; x++)
-            for (int y = row - 1; y <= row + 1; y++)
-                cells[x][y].setType("robot");
-
-        showLog("Exiting setCurCoord");
     }
 
     public int[] getCurCoord() {
@@ -800,7 +805,7 @@ public class GridMap extends View {
 
             //updateStatus( obstacleNumber + "," + (initialColumn) + "," + (initialRow) + ", Bearing: " + "-1");
             if (((initialColumn - 1)) >= 0 && ((initialRow - 1)) >= 0) {
-                Home.printMessage("OBSTACLE" + "," + (obstacleid3 + 1) + "," + (initialColumn) * 10 + "," + (initialRow) * 10 + "," + "-1");
+                Home.printMessage("OBSTACLE" + "," + (obstacleid3 + 1) + "," + (initialColumn) + "," + (initialRow) + "," + "-1" + "\n");
             } else {
                 showLog("out of grid");
             }
@@ -838,7 +843,7 @@ public class GridMap extends View {
                 //updateStatus( obstacleNumber + "," + (initialColumn) + "," + (initialRow) + ", Bearing: " + "-1");
 
                 if (((initialColumn - 1)) >= 0 && ((initialRow - 1)) >= 0) {
-                    Home.printMessage("OBSTACLE" + "," + (obstacleid2 + 1) + "," + (initialColumn) * 10 + "," + (initialRow) * 10 + "," + "-1");
+                    Home.printMessage("OBSTACLE" + "," + (obstacleid2 + 1) + "," + (initialColumn) + "," + (initialRow) + "," + "-1" + "\n");
                 } else {
                     showLog("out of grid");
                 }
@@ -875,7 +880,7 @@ public class GridMap extends View {
                     //updateStatus(obstacleid+1+ "," + (endColumn-1) + "," + (endRow-1) + ", Bearing: " + tempBearing);
 
                     if (((endColumn - 1)) >= 0 && ((endRow - 1)) >= 0) {
-                        Home.printMessage("OBSTACLE" + "," + (obstacleid + 1) + "," + (endColumn - 1) * 10 + "," + (endRow - 1) * 10 + "," + tempBearing.toUpperCase());
+                        Home.printMessage("OBSTACLE" + "," + (obstacleid + 1) + "," + (endColumn - 1) + "," + (endRow - 1) + "," + tempBearing.toUpperCase() + "\n");
                     } else {
                         showLog("out of grid");
                     }
@@ -1025,7 +1030,7 @@ public class GridMap extends View {
                             //updateStatus( (obstacleid+1) + "," + newID + ","+(tCol - 1) + "," + (tRow - 1) + ", Bearing: " + newBearing);
 
                             if (((tCol - 1)) >= 0 && ((tRow - 1)) >= 0) {
-                                Home.printMessage("OBSTACLE" + "," + (obstacleid + 1) + "," + (tCol - 1) * 10 + "," + (tRow - 1) * 10 + "," + newBearing.toUpperCase());
+                                Home.printMessage("OBSTACLE" + "," + (obstacleid + 1) + "," + (tCol - 1) + "," + (tRow - 1) + "," + newBearing.toUpperCase() + "\n");
                             } else {
                                 showLog("out of grid");
                             }
@@ -2215,26 +2220,30 @@ public class GridMap extends View {
     // Updating the obstacle image id (sent over by RPi)
     public boolean updateIDFromRpi(String obstacleID, String imageID) {
         showLog("updateIDFromRpi");
-        int x = obstacleCoord.get(Integer.parseInt(obstacleID))[0];
-        int y = obstacleCoord.get(Integer.parseInt(obstacleID))[1];
-        String parsedID = "";
+        try {
+            int x = obstacleCoord.get(Integer.parseInt(obstacleID))[0];
+            int y = obstacleCoord.get(Integer.parseInt(obstacleID))[1];
 
-        if (imageID.equals("UP")){
-            parsedID = "↑";
-        } else if (imageID.equals("DOWN")){
-            parsedID = " ↓";
-        } else if (imageID.equals("LEFT")){
-            parsedID = "←";
-        } else if (imageID.equals("RIGHT")) {
-            parsedID = "→";
-        } else if (imageID.equals(".")){
-            parsedID = "⬤";
-        } else {
-            parsedID = imageID;
+            String parsedID = "";
+            if (imageID.equals("arrow_up")){
+                parsedID = "↑";
+            } else if (imageID.equals("arrow_down")){
+                parsedID = " ↓";
+            } else if (imageID.equals("arrow_left")){
+                parsedID = "←";
+            } else if (imageID.equals("arrow_right")) {
+                parsedID = "→";
+            } else if (imageID.equals("dot")){
+                parsedID = "⬤";
+            } else {
+                parsedID = imageID;
+            }
+            ITEM_LIST.get(y)[x] = (imageID.equals("-1")) ? "NA" : parsedID;
+            this.invalidate();
+        } catch (Exception e){
+            BluetoothCommunications.getMessageReceivedTextView().append("ERROR in GridMap/updateIDFromRpi, target update unsuccessful: " + e + "\n");
         }
 
-        ITEM_LIST.get(y)[x] = (imageID.equals("-1")) ? "NA" : parsedID;
-        this.invalidate();
         return true;
     }
     private void updateStatus(String message) {

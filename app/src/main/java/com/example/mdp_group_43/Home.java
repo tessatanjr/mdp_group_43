@@ -282,7 +282,7 @@ public class Home extends Fragment {
         if ((x - 2)>=0 && (y - 1)>=0)
         {
 //          BluetoothCommunications.getMessageReceivedTextView().append("ROBOT" + "," + (col - 2)*5 + "," + (row - 1)*5 + "," + dir.toUpperCase());
-            Home.printMessage("ROBOT" + "," + (x-1) + "," + (y-1) + "," + dir.toUpperCase());
+            Home.printMessage("ROBOT" + "," + (x-1) + "," + (y-1) + "," + dir.toUpperCase() + "\n");
         }
         else{
             showLog("out of grid");
@@ -345,7 +345,7 @@ public class Home extends Fragment {
             String message = intent.getStringExtra("receivedMessage");
             showLog("receivedMessage: message --- " + message);
 
-            String[] cmdd = message.split(",");
+//            String[] cmdd = message.split(",");
 
 //            if (message.contains(" "))
 //            {
@@ -362,39 +362,43 @@ public class Home extends Fragment {
 
             //STATUS:<input>
             if (message.contains("STATUS")) {
-                robotStatusTextView.setText(message.split(":")[1]);
+                try {
+                    robotStatusTextView.setText(message.split(":")[1]);
+                } catch (Exception e) {
+                    BluetoothCommunications.getMessageReceivedTextView().append("ERROR in Home.java/ line 366, receiving STATUS throwing error: " + e + "\n");
+                }
             }
             //ROBOT,5,4,EAST (Update robot position) send UPDATE,ROBOT, <x>, <y>, <direction>
             if (message.contains("ROBOT") && message.contains("UPDATE")) {
-                Log.d(TAG, "ENTERED");
-                String[] cmd = message.split(",");
-                String[] sentCoords = Arrays.copyOfRange(cmd,2,5);
-                Log.d(TAG, "Sent coords " + Arrays.toString(sentCoords));
-                String[] sentDirection = Arrays.copyOfRange(sentCoords,2,3);
-                Log.d(TAG, "Sent direction " + Arrays.toString(sentDirection));
-                String direction = "";
-                String abc = String.join("", sentDirection);
-                if (abc.contains("EAST")) {
-                    direction = "right";
+                try {
+                    Log.d(TAG, "ENTERED");
+                    String[] cmd = message.split(",");
+                    String[] sentCoords = Arrays.copyOfRange(cmd, 2, 5);
+                    Log.d(TAG, "Sent coords " + Arrays.toString(sentCoords));
+                    String[] sentDirection = Arrays.copyOfRange(sentCoords, 2, 3);
+                    Log.d(TAG, "Sent direction " + Arrays.toString(sentDirection));
+                    String direction = "";
+                    String abc = String.join("", sentDirection);
+                    if (abc.contains("EAST")) {
+                        direction = "right";
+                    } else if (abc.contains("NORTH")) {
+                        direction = "up";
+                    } else if (abc.contains("WEST")) {
+                        direction = "left";
+                    } else if (abc.contains("SOUTH")) {
+                        direction = "down";
+                    } else {
+                        direction = "";
+                    }
+                    Log.d(TAG, direction);
+                    BluetoothCommunications.getMessageReceivedTextView().append("x: " + cmd[2] + " y: " + cmd[3] + " ROBOT DIRECTION: " + cmd[4] + "\n");
+                    //                gridMap.setCurCoord(Integer.valueOf(sentCoords[0]), Integer.valueOf(sentCoords[1]), direction);
+                    //                if message containts UPDATE, call setCurCoord
+                    gridMap.setCurCoord(Integer.valueOf(sentCoords[0]) + 1, Integer.valueOf(sentCoords[1]) + 1, direction);
+                    //                gridMap.setCurCoord(Integer.valueOf(sentCoords[1]) + 2, 19 - Integer.valueOf(sentCoords[0]), direction);
+                } catch (Exception e){
+                    BluetoothCommunications.getMessageReceivedTextView().append("ERROR in Home.java/ line 368, receiving ROBOT,UPDATE throwing error: " + e + "\n");
                 }
-                else if (abc.contains("NORTH")) {
-                    direction = "up";
-                }
-                else if (abc.contains("WEST")) {
-                    direction = "left";
-                }
-                else if (abc.contains("SOUTH")) {
-                    direction = "down";
-                }
-                else{
-                    direction = "";
-                }
-                Log.d(TAG, direction);
-                BluetoothCommunications.getMessageReceivedTextView().append("x: " + cmd[2]+ " y: " + cmd[3] + " ROBOT DIRECTION: " + cmd[4] +"\n");
-//                gridMap.setCurCoord(Integer.valueOf(sentCoords[0]), Integer.valueOf(sentCoords[1]), direction);
-//                if message containts UPDATE, call setCurCoord
-                gridMap.setCurCoord(Integer.valueOf(sentCoords[0]) + 1, Integer.valueOf(sentCoords[1]) + 1 , direction);
-//                gridMap.setCurCoord(Integer.valueOf(sentCoords[1]) + 2, 19 - Integer.valueOf(sentCoords[0]), direction);
             }
             //image format from RPI is "TARGET,<obID>,<ImValue>" eg TARGET,3,7
             else if(message.contains("TARGET")) {
