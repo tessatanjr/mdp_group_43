@@ -2225,16 +2225,99 @@ public class GridMap extends View {
             int y = obstacleCoord.get(Integer.parseInt(obstacleID))[1];
 
             String parsedID = "";
-            if (imageID.equals("arrow_up")){
-                parsedID = "↑";
-            } else if (imageID.equals("arrow_down")){
-                parsedID = " ↓";
-            } else if (imageID.equals("arrow_left")){
-                parsedID = "←";
-            } else if (imageID.equals("arrow_right")) {
-                parsedID = "→";
-            } else if (imageID.equals("dot")){
-                parsedID = "⬤";
+            if (imageID.equals("11")){
+                parsedID = "1(ID:11)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 1 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("12")){
+                parsedID = "2(ID:12)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 2 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("13")){
+                parsedID = "3(ID:13)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 3 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("14")){
+                parsedID = "4(ID:14)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 4 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("15")){
+                parsedID = "5(ID:15)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 5 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("16")){
+                parsedID = "6(ID:16)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 6 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("17")){
+                parsedID = "7(ID:17)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 7 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("18")){
+                parsedID = "8(ID:18)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 8 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("19")){
+                parsedID = "9(ID:19)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": 9 ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("20")){
+                parsedID = "A(ID:20)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": A ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("21")){
+                parsedID = "B(ID:21)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": B ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("22")){
+                parsedID = "C(ID:22)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": C ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("23")){
+                parsedID = "D(ID:23)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": D ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("24")){
+                parsedID = "E(ID:24)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": E ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("25")){
+                parsedID = "F(ID:25)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": F ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("26")){
+                parsedID = "G(ID:26)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": G ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("27")){
+                parsedID = "H(ID:27)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": H ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("28")){
+                parsedID = "S(ID:28)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": S ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("29")){
+                parsedID = "T(ID:29)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": T ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("30")){
+                parsedID = "U(ID:30)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": U ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("31")){
+                parsedID = "V(ID:31)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": V ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("32")){
+                parsedID = "W(ID:32)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": W ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("33")){
+                parsedID = "X(ID:33)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": X ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("34")){
+                parsedID = "Y(ID:34)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": Y ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("35")){
+                parsedID = "Z(ID:35)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": Z ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("36")){
+                parsedID = "↑(ID:36)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": ↑ ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("37")){
+                parsedID = "↓(ID:37)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": ↓ ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("38")){
+                parsedID = "→(ID:38)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": → ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("39")){
+                parsedID = "←(ID:39)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": ← ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("40")){
+                parsedID = "⬤(ID:40)";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": ⬤ ( ID: " + imageID + ") \n");
+            } else if (imageID.equals("obs")){
+                parsedID = "⧈";
+                BluetoothCommunications.getMessageReceivedTextView().append("OBSTACLE " + obstacleID + ": ⧈ ( ID: " + imageID + ") \n");
             } else {
                 parsedID = imageID;
             }

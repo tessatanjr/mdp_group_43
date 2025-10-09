@@ -125,6 +125,7 @@ public class EmergencyFragment extends DialogFragment {
                 {
                     gridMap.imageBearings.get(row)[col] = dir;
                     gridMap.setObstacleCoord(col+1, row+1);
+                    showToast("Obstacle string added! " + col+1 + ", " + row+1);
                 }
 
                 else{
@@ -136,7 +137,7 @@ public class EmergencyFragment extends DialogFragment {
                     gridMap.setStartCoord(col+1,row+1);
                     gridMap.updateRobotAxis(col+1, row+1, obstDir);
                     Home.refreshDirection(obstDir);
-
+                    showToast("Robot added! " + col+1 + ", " + row+1);
                 }
 
                 // obstID is acquired based on the obstID set for the PREVIOUS obstacle (prev obst MUST be added in this way)
@@ -151,7 +152,6 @@ public class EmergencyFragment extends DialogFragment {
 //                chatInput.setText(newString);
 //                getDialog().dismiss();
                 gridMap.invalidate();
-                showToast("Obstacle string addedd!");
                 showLog("Exiting addManualBtn");
             }
         });

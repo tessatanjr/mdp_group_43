@@ -24,4 +24,5 @@
     <!-- Map -->
     <string name="manual">MANUAL</string>
     <string name="auto">AUTO</string>
+    <string name="set_start_point">SET START POINT</string>
 </resources>

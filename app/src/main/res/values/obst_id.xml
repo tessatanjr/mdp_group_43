@@ -23,9 +23,9 @@
         <item>19</item>
     </string-array>
     <string-array name="obstDir_array">
-        <item>North</item>
-        <item>South</item>
-        <item>East</item>
-        <item>West</item>
+        <item>North/Up</item>
+        <item>South/Down</item>
+        <item>East/Right</item>
+        <item>West/Left</item>
     </string-array>
 </resources>

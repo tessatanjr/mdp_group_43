@@ -342,37 +342,25 @@ public class Home extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             PathTranslator pathTranslator = new PathTranslator(gridMap);    // For real-time updating on displayed gridmap
-            String message = intent.getStringExtra("receivedMessage");
-            showLog("receivedMessage: message --- " + message);
-
-//            String[] cmdd = message.split(",");
-
-//            if (message.contains(" "))
-//            {
-//                message= Arrays.toString(message.split(" "));
-//            }
-//            showLog("cmd1 --- " + cmdd[1]);
-//            showLog("cmd2 --- " + cmdd[2]);
-
+            String message_raw = intent.getStringExtra("receivedMessage");
+            showLog("receivedMessage: message --- " + message_raw);
 
             int[] global_store = gridMap.getCurCoord();
             g_coordX = global_store[0];
             g_coordY = global_store[1];
             ArrayList<String> mapCoord = new ArrayList<>();
 
-            //STATUS:<input>
-            if (message.contains("STATUS")) {
-                try {
-                    robotStatusTextView.setText(message.split(":")[1]);
-                } catch (Exception e) {
-                    BluetoothCommunications.getMessageReceivedTextView().append("ERROR in Home.java/ line 366, receiving STATUS throwing error: " + e + "\n");
+            String[] message = message_raw.split("<br>");
+            for (int i = 0; i < message.length; i++) {
+                Log.d(TAG, "split <br>: " + message[i]);
+                //STATUS:<input>
+                if (message[i].contains("STATUS")) {
+                    robotStatusTextView.setText(message[i].split(":")[1]);
                 }
-            }
-            //ROBOT,5,4,EAST (Update robot position) send UPDATE,ROBOT, <x>, <y>, <direction>
-            if (message.contains("ROBOT") && message.contains("UPDATE")) {
-                try {
+                //ROBOT,5,4,EAST (Update robot position) send UPDATE,ROBOT, <x>, <y>, <direction>
+                 else if (message[i].contains("ROBOT") && message[i].contains("UPDATE")) {
                     Log.d(TAG, "ENTERED");
-                    String[] cmd = message.split(",");
+                    String[] cmd = message[i].split(",");
                     String[] sentCoords = Arrays.copyOfRange(cmd, 2, 5);
                     Log.d(TAG, "Sent coords " + Arrays.toString(sentCoords));
                     String[] sentDirection = Arrays.copyOfRange(sentCoords, 2, 3);
@@ -391,78 +379,24 @@ public class Home extends Fragment {
                         direction = "";
                     }
                     Log.d(TAG, direction);
-                    BluetoothCommunications.getMessageReceivedTextView().append("x: " + cmd[2] + " y: " + cmd[3] + " ROBOT DIRECTION: " + cmd[4] + "\n");
-                    //                gridMap.setCurCoord(Integer.valueOf(sentCoords[0]), Integer.valueOf(sentCoords[1]), direction);
-                    //                if message containts UPDATE, call setCurCoord
+//                if message containts UPDATE, call setCurCoord
                     gridMap.setCurCoord(Integer.valueOf(sentCoords[0]) + 1, Integer.valueOf(sentCoords[1]) + 1, direction);
-                    //                gridMap.setCurCoord(Integer.valueOf(sentCoords[1]) + 2, 19 - Integer.valueOf(sentCoords[0]), direction);
-                } catch (Exception e){
-                    BluetoothCommunications.getMessageReceivedTextView().append("ERROR in Home.java/ line 368, receiving ROBOT,UPDATE throwing error: " + e + "\n");
                 }
-            }
-            //image format from RPI is "TARGET,<obID>,<ImValue>" eg TARGET,3,7
-            else if(message.contains("TARGET")) {
-                try {
-                    String[] cmd = message.split(",");
-                    String temp2="-1";
-                    BluetoothCommunications.getMessageReceivedTextView().append("Obstacle no: " + cmd[1]+ "TARGET ID: " + cmd[2] + "\n");
+                //image format from RPI is "TARGET,<obID>,<ImValue>" eg TARGET,3,7
+                else if (message[i].contains("TARGET")) {
+                    try {
+                        String[] cmd = message[i].split(",");
+                        String temp2 = "-1";
 
-//                    if (cmd[2].contains("STOP"))
-//                    {
-//                        String temp=cmd[2];
-//                        String[] temp1=temp.split(" ");
-//                        temp2=temp1[0];
-//
-//                    }
+                        gridMap.updateIDFromRpi(String.valueOf(Integer.valueOf(cmd[1]) - 1), cmd[2]);
 
-                    gridMap.updateIDFromRpi(String.valueOf(Integer.valueOf(cmd[1])-1), cmd[2]);
-//                    obstacleID = String.valueOf(Integer.valueOf(cmd[1]) - 2);
-//                    int ob= Integer.parseInt(obstacleID);
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    BluetoothCommunications.getMessageReceivedTextView().append("unknown message received: " + message + "\n");
+                    showLog("unknown message received");
                 }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-//            else if(message.contains("ARROW")){
-//                String[] cmd = message.split(",");
-//                BluetoothCommunications.getMessageReceivedTextView().append("Obstacle no: " + cmd[1]+ "TARGET ID: " + cmd[2] + "\n");
-
-//                Home.refreshMessageReceivedNS("TASK2"+"\n");
-//                Home.refreshMessageReceivedNS("obstacle id: "+cmd[1]+", ARROW: "+cmd[2]);
-
-
-//                updateStatus(cmd[0]+" "+ cmd[1]+" "+cmd[2]);
-//            }
-            // OLD VER: Expects a syntax of e.g. Algo|f010. Commented out and implemented new version below
-/*            if(message.contains("Algo")) {
-                // translate the message after Algo|
-                if(trackRobot)
-                    pathTranslator.translatePath(message.split("\\|")[1]);
-//                pathTranslator.altTranslation(message.split("\\|")[1]);   // last min addition - untested
-            }*/
-
-            //NEW VER: Expects a syntax of eg. MOVE,<DISTANCE IN CM>,<DIRECTION>.
-            //NEW VER: Expects a syntax of eg. TURN,<DIRECTION>.
-
-            //CASE 1 & 2: MoveInstruction or TurnInstruction sent
-//            else if(message.contains("MOVE") || message.contains("TURN")){
-//                updateStatus("translation");
-//                pathTranslator.translatePath(message); //splitting and translation will be done in PathTranslator
-//            }
-//            else if(message.contains("STOP"))
-//            {
-//                Home.refreshMessageReceivedNS("STOP received");
-////                showLog("received Stop");
-//                Home.stopTimerFlag = true;
-//                Home.stopWk9TimerFlag=true;
-//                timerHandler.removeCallbacks(ControlFragment.timerRunnableExplore);
-//                timerHandler.removeCallbacks(ControlFragment.timerRunnableFastest);
-//            }
-            else {
-                BluetoothCommunications.getMessageReceivedTextView().append("unknown message received: " + message + "\n");
-                showLog("unknown message received");
             }
         }
     };

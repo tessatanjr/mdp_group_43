@@ -40,7 +40,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/selected_tab"
         app:layout_constraintStart_toEndOf="@+id/xTextView"
         app:layout_constraintTop_toBottomOf="@+id/manualFragmentTitleTextView" />
 
@@ -63,7 +63,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/selected_tab"
         app:layout_constraintStart_toEndOf="@+id/yTextView"
         app:layout_constraintTop_toBottomOf="@+id/manualFragmentTitleTextView" />
 
@@ -88,7 +88,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="110dp"
         android:minWidth="100dp"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/selected_tab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toEndOf="@+id/directionTextView"
